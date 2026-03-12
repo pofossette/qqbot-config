@@ -15,11 +15,15 @@ trap cleanup EXIT
 
 mkdir -p "$TEST_ROOT/scripts" "$TEST_ROOT/scripts/lib" "$TEST_ROOT/docker" "$TEST_ROOT/data" "$FAKE_BIN"
 cp "$ROOT_DIR/scripts/backup.sh" "$TEST_ROOT/scripts/backup.sh"
+cp "$ROOT_DIR/scripts/backup.py" "$TEST_ROOT/scripts/backup.py"
 cp "$ROOT_DIR/scripts/restore.sh" "$TEST_ROOT/scripts/restore.sh"
+cp "$ROOT_DIR/scripts/restore.py" "$TEST_ROOT/scripts/restore.py"
 cp "$ROOT_DIR/scripts/logs.sh" "$TEST_ROOT/scripts/logs.sh"
-cp "$ROOT_DIR/scripts/lib/common.sh" "$TEST_ROOT/scripts/lib/common.sh"
-cp "$ROOT_DIR/scripts/lib/archive.sh" "$TEST_ROOT/scripts/lib/archive.sh"
-cp "$ROOT_DIR/scripts/lib/ui.sh" "$TEST_ROOT/scripts/lib/ui.sh"
+cp "$ROOT_DIR/scripts/logs.py" "$TEST_ROOT/scripts/logs.py"
+cp "$ROOT_DIR/scripts/deploy_lib.py" "$TEST_ROOT/scripts/deploy_lib.py"
+cp "$ROOT_DIR/scripts/down.py" "$TEST_ROOT/scripts/down.py"
+cp "$ROOT_DIR/scripts/manage.py" "$TEST_ROOT/scripts/manage.py"
+cp "$ROOT_DIR/scripts/up.py" "$TEST_ROOT/scripts/up.py"
 chmod +x "$TEST_ROOT/scripts/"*.sh
 
 cat >"$FAKE_BIN/docker" <<'EOF'

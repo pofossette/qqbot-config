@@ -1,0 +1,19 @@
+.env
+.env.local
+.DS_Store
+
+# Runtime data
+data/
+napcat/config/
+napcat/qq/
+
+# Local logs and temp files
+*.log
+*.pid
+*.tmp
+*.swp
+*.swo
+
+# Editor / IDE
+.idea/
+.vscode/

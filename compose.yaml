@@ -1,0 +1,57 @@
+services:
+  napcat:
+    image: ${NAPCAT_IMAGE:-mlikiowa/napcat-docker:latest}
+    container_name: napcat
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      NAPCAT_UID: ${NAPCAT_UID:-1000}
+      NAPCAT_GID: ${NAPCAT_GID:-1000}
+      MODE: astrbot
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - "${NAPCAT_WEBUI_PORT:-6099}:6099"
+    volumes:
+      - ./data:/AstrBot/data
+      - ./napcat/config:/app/napcat/config
+      - ./napcat/qq:/app/.config/QQ
+    networks:
+      - botnet
+
+  astrbot:
+    image: ${ASTRBOT_IMAGE:-soulter/astrbot:latest}
+    container_name: astrbot
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    ports:
+      - "${ASTRBOT_WEBUI_PORT:-6185}:6185"
+      - "${ASTRBOT_ONEBOT_PORT:-6199}:6199"
+    volumes:
+      - ./data:/AstrBot/data
+    networks:
+      - botnet
+
+  watchtower:
+    image: ${WATCHTOWER_IMAGE:-containrrr/watchtower:latest}
+    container_name: watchtower
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-Asia/Shanghai}
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_SCHEDULE: ${WATCHTOWER_SCHEDULE:-0 0 5 * * *}
+      WATCHTOWER_INCLUDE_STOPPED: "false"
+      WATCHTOWER_REVIVE_STOPPED: "false"
+      WATCHTOWER_ROLLING_RESTART: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - botnet
+
+networks:
+  botnet:
+    driver: bridge
